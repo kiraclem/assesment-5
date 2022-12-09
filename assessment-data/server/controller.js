@@ -26,9 +26,22 @@ module.exports = {
         .then(dbRes => res.status(200).send(dbRes[0]))
     },
     getCities: (req, res) => {
-        sequelize.query(``)
+        sequelize.query(`select a.city_id, a.name, b.country_id, b.name
+        from cities as a
+        join countries as b
+        on a.country_id = b.country_id
+        order by rating desc;
+        `).then(dbRes => res.status(200).send(dbRes[0]))
     },
     
+    deleteCity: (req, res) => {
+        let { city_id } = req.params
+        sequelize.query(`
+        delete 
+        from cities
+        where city_id = ${city_id};
+        `).then(dbRes => res.status(200).send(dbRes[0]))
+    },
 
     seed: (req, res) => {
         sequelize.query(`
