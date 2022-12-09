@@ -26,10 +26,10 @@ module.exports = {
         .then(dbRes => res.status(200).send(dbRes[0]))
     },
     getCities: (req, res) => {
-        sequelize.query(`select a.city_id, a.name, b.country_id, b.name
-        from cities as a
-        join countries as b
-        on a.country_id = b.country_id
+        sequelize.query(`select b.country_id, b.name, a.city_id, a.name, a.rating
+        from countries as b
+        join cities as a
+        on b.country_id = a.country_id
         order by rating desc;
         `).then(dbRes => res.status(200).send(dbRes[0]))
     },
